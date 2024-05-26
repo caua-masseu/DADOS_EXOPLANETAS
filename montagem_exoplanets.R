@@ -2,7 +2,7 @@
 
 library(tidyverse)
 
-url <-"https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+url <- "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
 read_html(url) -> page
 html_table(page, header = T)[[1]][-21,] -> table
 colnames(table) <- c("Variables", "Mercury", "Venus", "Earth",  "Moon" , "Mars",  "Jupiter", "Saturn", "Uranus" , "Neptune", "Pluto")
@@ -21,8 +21,6 @@ table$pl_eqt <- c(449, 328, 279, 226, 122, 90, 64, 51, 44)
 colnames(table) <- c("pl_name",  "pl_masse", "pl_rade", "pl_dens", "pl_orbper", "pl_rvamp", "pl_orbincl", "pl_orbeccen","pl_trueobliq", "pl_eqt")
 
 PS_2024 <-read.csv("C:/Users/PC/Desktop/PS_2024.05.23_16.45.53.csv")
-#PS_2024 <- read.csv("C:\\Users\\PC\\Desktop\\PS_2024.05.16_07.28.51.csv")
-#PS_2024 <- read.csv("//smb/ra204238/Downloads/PS_2024.csv")
 
 PS_2024 %>% group_by(pl_name) %>% filter(pl_pubdate == max(pl_pubdate)) -> data
 data <- data[,-c(9:11)]
@@ -32,3 +30,9 @@ df <- rbind(data, table)
 df <- df[, -c(3,7, 9:12)] %>% drop_na()
 df <- df[-c(30, 139),]
 df <- column_to_rownames(df, var = "pl_name")
+colnames(df) <- c("orbper", "rade", "mass", "dens", "eqt")
+df$orbper <- log(df$orbper)
+df$rade <- log(df$rade)
+df$mass <- log(df$mass)
+df$dens <- log(df$dens)
+df$eqt <- df$eqt/1000
