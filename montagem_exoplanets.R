@@ -20,7 +20,7 @@ table <- table[, c(1:4, 12:16)] %>% filter(PLANETS != "Moon") #Escolhendo contin
 table$pl_eqt <- c(449, 328, 279, 226, 122, 90, 64, 51, 44)
 colnames(table) <- c("pl_name",  "pl_masse", "pl_rade", "pl_dens", "pl_orbper", "pl_rvamp", "pl_orbincl", "pl_orbeccen","pl_trueobliq", "pl_eqt")
 
-PS_2024 <-read.csv("C:/Users/PC/Desktop/PS_2024.05.23_16.45.53.csv")
+PS_2024 <-read.csv("https://raw.githubusercontent.com/caua-masseu/DADOS_EXOPLANETAS/main/PS_2024.05.23_16.45.53.csv")
 
 PS_2024 %>% group_by(pl_name) %>% filter(pl_pubdate == max(pl_pubdate)) -> data
 data <- data[,-c(9:11)]
